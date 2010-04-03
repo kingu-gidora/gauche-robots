@@ -1,0 +1,29 @@
+NAME
+    This is Gauche module robots.
+    robots.txt parser.
+ 
+VERSION
+    0.0.1
+ 
+INSTALLATION
+    1. robots.scm add copy to *load-path* directory.
+ 
+SYNOPSIS
+    (use robots)
+    (use rfc.http)
+
+    (define *host* "google.co.jp")
+    (define *path* "/robots.txt")
+
+    (define res (values-ref (http-get *host* *path*) 2))
+    (receive (ua-hash sitemap-list) (parse-robots res)
+             (display (robots->dump ua-hash))
+             (newline)
+             (display sitemap-list)
+             (newline)
+             (robots->dump ua-hash '("*" "Allow"))
+             (newline))
+
+    
+AUTHOR
+    Takuya Mannami <mtakuya@users.sourceforge.jp>
